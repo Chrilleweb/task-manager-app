@@ -4,17 +4,16 @@ import logo from "../images/task-manager-logo.svg";
 
 interface NavbarProps {
   isAuthenticated: boolean;
-  onLogout?: () => void;
+  setIsAuthentication: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ isAuthenticated, onLogout }) => {
+const Navbar: React.FC<NavbarProps> = ({ isAuthenticated, setIsAuthentication }) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    if (onLogout) {
-      onLogout();
-    }
+    setIsAuthentication(false);
+    navigate("/login");
 
     navigate("/login");
   };

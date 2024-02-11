@@ -9,15 +9,10 @@ import Frontpage from "./components/Frontpage";
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    setIsAuthenticated(false);
-  };
-
   return (
     <Router>
       <div className="App container mx-auto 2xl:px-64 xl:px-32">
-        <Navbar isAuthenticated={isAuthenticated} onLogout={handleLogout} />
+        <Navbar isAuthenticated={isAuthenticated} setIsAuthentication={setIsAuthenticated} />
         <Routes>
           <Route
             path="/"
