@@ -21,7 +21,7 @@ const Navbar: React.FC<NavbarProps> = ({ isAuthenticated, setIsAuthentication })
   return (
     <nav className="flex justify-between items-center py-4">
       <Link
-        to="/frontpage"
+        to="/auth/frontpage"
         className="flex items-center text-2xl font-bold text-gray-800"
       >
         <img

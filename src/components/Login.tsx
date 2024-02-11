@@ -14,7 +14,7 @@ const Login: React.FC<LoginProps> = ({ setIsAuthenticated }) => {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch("http://localhost:3001/auth/login", {
+      const response = await fetch("http://localhost:3001/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -38,7 +38,7 @@ const Login: React.FC<LoginProps> = ({ setIsAuthenticated }) => {
         setSuccess("Login successful!");
         localStorage.setItem("token", data.token);
         setIsAuthenticated(true);
-        navigate("/frontpage");
+        navigate("/auth/frontpage");
       }
     } catch (error: any) {
       console.error("Login failed:", error.message);
