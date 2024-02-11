@@ -1,25 +1,52 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import "./css/global.css";
+import Navbar from "./components/Navbar";
+import Login from "./components/Login";
+import Register from "./components/Register";
+import Frontpage from "./components/Frontpage";
 
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setIsAuthenticated(false);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="App container mx-auto 2xl:px-64 xl:px-32">
+        <Navbar isAuthenticated={isAuthenticated} onLogout={handleLogout} />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              isAuthenticated ? (
+                <Frontpage />
+              ) : (
+                <Login setIsAuthenticated={setIsAuthenticated} />
+              )
+            }
+          />
+          <Route
+            path="/login"
+            element={<Login setIsAuthenticated={setIsAuthenticated} />}
+          />
+          <Route path="/register" element={<Register />} />
+          <Route
+            path="/frontpage"
+            element={
+              isAuthenticated ? (
+                <Frontpage />
+              ) : (
+                <Login setIsAuthenticated={setIsAuthenticated} />
+              )
+            }
+          />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
