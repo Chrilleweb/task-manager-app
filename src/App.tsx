@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import './css/global.css';
 import Navbar from './components/Navbar';
@@ -9,6 +9,13 @@ import Frontpage from './components/Frontpage';
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      setIsAuthenticated(true);
+    }
+  }, []);
+  
   return (
     <Router>
       <div className="App container mx-auto 2xl:px-64 xl:px-32">
