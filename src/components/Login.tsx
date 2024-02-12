@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import apiEndpoints from "../services/apiEndpoints";
 import apiService from "../services/apiService";
 
@@ -89,6 +89,9 @@ const Login: React.FC<LoginProps> = ({ setIsAuthenticated }) => {
           onChange={(e) => setPassword(e.target.value)}
         />
       </div>
+      <Link to="/register" className="text-blue-500 mb-2 block">
+        Don't have an account? Register here.
+      </Link>
       <button
         className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400"
         onClick={handleLogin}
