@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import apiEndpoints from "../services/apiEndpoints";
+import apiService from "../services/apiService";
 
 const Register: React.FC = () => {
   const [username, setUsername] = useState<string>('');
@@ -8,30 +10,29 @@ const Register: React.FC = () => {
 
   const handleRegister = async () => {
     try {
-      const response = await fetch('http://localhost:3001/register', {
+      const response = await apiService({
+        url: apiEndpoints.register,
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password }),
+        body: { username, password },
+        includeToken: false,
       });
 
-      if (!response.ok) {
-        const data = await response.json();
-        console.error('Registration failed:', response.status, data.message);
-        setError(data.message); // Set the error in the component state
-        setSuccess(null); // Clear any previous success message
-        return;
+      if (response) {
+        console.log('User registered successfully!');
+        setError(null);
+        setSuccess('User registered successfully!');
+      }
+    } catch (error: any) {
+      console.error('Error during registration:', error.message);
+
+      // Handle specific error messages from the server
+      if (error.message === 'Username already taken') {
+        setError('Username is already taken. Please choose a different one.');
+      } else {
+        setError('Internal Server Error');
       }
 
-      // Registration successful
-      console.log('User registered successfully!');
-      setError(null); // Clear any previous error
-      setSuccess('User registered successfully!'); // Set the success message
-    } catch (error) {
-      console.error('Error during registration:', error);
-      setError('Internal Server Error'); // Set a generic error message
-      setSuccess(null); // Clear any previous success message
+      setSuccess(null);
     }
   };
 

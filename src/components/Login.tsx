@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import apiEndpoints from "../services/apiEndpoints";
+import apiService from "../services/apiService";
 
 interface LoginProps {
   setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const Login: React.FC<LoginProps> = ({ setIsAuthenticated }) => {
-  const navigate = useNavigate(); // Initialize the navigate function
+  const navigate = useNavigate();
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
@@ -14,35 +16,31 @@ const Login: React.FC<LoginProps> = ({ setIsAuthenticated }) => {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch("http://localhost:3001/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, password }),
+      const response = await apiService({
+        url: apiEndpoints.login,
+        method: 'POST',
+        body: { username, password },
+        includeToken: false,
       });
 
-      if (!response.ok) {
-        const data = await response.json();
-        console.error("Login failed:", response.status, data.message);
-        setError(data.message);
-        setSuccess(null);
-        return;
-      }
-
-      // Login successful
-      const data = await response.json();
-      console.log("Login successful. Token:", data.token);
-      if (data.token) {
+      // Check if response is successful
+      if (response) {
+        console.log("Login successful. Token:", response.token);
         setError(null);
         setSuccess("Login successful!");
-        localStorage.setItem("token", data.token);
+        localStorage.setItem("token", response.token);
         setIsAuthenticated(true);
         navigate("/auth/frontpage");
       }
     } catch (error: any) {
       console.error("Login failed:", error.message);
-      setError("Internal Server Error");
+
+      if (error.message === 'Invalid username or password') {
+        setError('Invalid username or password');
+      } else {
+        setError('Internal Server Error');
+      }
+
       setSuccess(null);
     }
   };
