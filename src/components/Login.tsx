@@ -18,7 +18,7 @@ const Login: React.FC<LoginProps> = ({ setIsAuthenticated }) => {
     try {
       const response = await apiService({
         url: apiEndpoints.login,
-        method: 'POST',
+        method: "POST",
         body: { username, password },
         includeToken: false,
       });
@@ -29,16 +29,17 @@ const Login: React.FC<LoginProps> = ({ setIsAuthenticated }) => {
         setError(null);
         setSuccess("Login successful!");
         localStorage.setItem("token", response.token);
+        localStorage.setItem("username", username);
         setIsAuthenticated(true);
         navigate("/auth/frontpage");
       }
     } catch (error: any) {
       console.error("Login failed:", error.message);
 
-      if (error.message === 'Invalid username or password') {
-        setError('Invalid username or password');
+      if (error.message === "Invalid username or password") {
+        setError("Invalid username or password");
       } else {
-        setError('Internal Server Error');
+        setError("Internal Server Error");
       }
 
       setSuccess(null);

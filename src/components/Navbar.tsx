@@ -1,22 +1,32 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../images/task-manager-logo.svg";
+import userIcon from "../images/user-icon.svg";
 
 interface NavbarProps {
   isAuthenticated: boolean;
   setIsAuthentication: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ isAuthenticated, setIsAuthentication }) => {
+const Navbar: React.FC<NavbarProps> = ({
+  isAuthenticated,
+  setIsAuthentication,
+}) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("username");
     setIsAuthentication(false);
     navigate("/login");
 
     navigate("/login");
   };
+
+  const username = localStorage.getItem("username");
+  const usernameUpperCase = username
+    ? username.charAt(0).toUpperCase() + username.slice(1)
+    : "";
 
   return (
     <nav className="flex justify-between items-center py-4">
@@ -35,9 +45,13 @@ const Navbar: React.FC<NavbarProps> = ({ isAuthenticated, setIsAuthentication })
       </Link>
       <div>
         {isAuthenticated ? (
-          <button className="p-2" onClick={handleLogout}>
-            Logout
-          </button>
+          <div className="flex items-center">
+            <img src={userIcon} alt="User Icon" width="24" className="mr-2" />
+            <p className="mr-4">{usernameUpperCase}</p>
+            <button className="p-2" onClick={handleLogout}>
+              Logout
+            </button>
+          </div>
         ) : (
           <>
             <Link to="/login" className="p-2">
