@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
+import ErrorComponent from './ErrorComponent';
 
 const Frontpage = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
-  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -17,16 +17,13 @@ const Frontpage = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
 
         if (response.ok) {
           // Frontpage data is successfully fetched
-          setIsLoading(false);
         } else {
           // Invalid or missing token
           setError('Invalid token');
-          setIsLoading(false);
         }
       } catch (error) {
         console.error('Error fetching frontpage data:', error);
         setError('Error fetching data');
-        setIsLoading(false);
       }
     };
 
@@ -36,14 +33,9 @@ const Frontpage = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
     }
   }, [isAuthenticated]);
 
-  if (isLoading) {
-    // Loading state, you can show a loading spinner or message here
-    return <div>Loading...</div>;
-  }
-
   if (error || !isAuthenticated) {
-    // Redirect to login if not authenticated or error occurred
-    return <Navigate to="/login" />;
+    // Display error component
+    return <ErrorComponent />;
   }
 
   // Render the frontpage content here
@@ -56,4 +48,3 @@ const Frontpage = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
 };
 
 export default Frontpage;
-
