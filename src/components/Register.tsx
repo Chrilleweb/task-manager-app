@@ -76,6 +76,7 @@ const Register: React.FC = () => {
           className="mt-1 p-2 border rounded-md w-full"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
+          autoComplete="username"
         />
       </div>
       <div className="mb-4">
@@ -91,6 +92,7 @@ const Register: React.FC = () => {
           className="mt-1 p-2 border rounded-md w-full"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          autoComplete="new-password"
         />
       </div>
       <div className="mb-4">
@@ -106,6 +108,7 @@ const Register: React.FC = () => {
           className="mt-1 p-2 border rounded-md w-full"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
+          autoComplete="new-password"
         />
       </div>
       <button
