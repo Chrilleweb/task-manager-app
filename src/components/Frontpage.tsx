@@ -4,7 +4,11 @@ import apiEndpoints from "../services/apiEndpoints";
 import apiService from "../services/apiService";
 import ViewTasks from "./Viewtasks";
 
-const Frontpage = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
+interface FrontpageProps {
+  isAuthenticated: boolean;
+}
+
+const Frontpage: React.FC<FrontpageProps> = ({ isAuthenticated }) => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -28,11 +32,11 @@ const Frontpage = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
 
   return (
     <div className="mb-24">
-    <div className="text-center mt-10">
-      <h1 className="text-4xl font-bold mb-4">Welcome to the Frontpage</h1>
-      <p className="text-lg text-gray-600">This is the main page.</p>
-    </div>
-    <ViewTasks />
+      <div className="text-center mt-10">
+        <h1 className="text-4xl font-bold mb-4">Welcome to the Frontpage</h1>
+        <p className="text-lg text-gray-600">This is the main page.</p>
+      </div>
+      <ViewTasks />
     </div>
   );
 };
