@@ -16,6 +16,8 @@ function App() {
     const token = localStorage.getItem('token');
     if (token) {
       setIsAuthenticated(true);
+    } else {
+      setIsAuthenticated(false);
     }
   }, []);
   
@@ -27,7 +29,7 @@ function App() {
           <Route path="/" element={<Navigate to="/auth/frontpage" />} />
           <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/auth/frontpage" element={<Frontpage isAuthenticated={isAuthenticated} />} />
+          <Route path="/auth/frontpage" element={<Frontpage />} />
           <Route path="/auth/create-task" element={<CreateTask isAuthenticated={isAuthenticated} />} />
           <Route path="*" element={<ErrorPageNotFound />} />
         </Routes>

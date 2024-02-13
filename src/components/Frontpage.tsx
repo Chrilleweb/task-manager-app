@@ -4,15 +4,11 @@ import apiEndpoints from "../services/apiEndpoints";
 import apiService from "../services/apiService";
 import ViewTasks from "./Viewtasks";
 
-interface FrontpageProps {
-  isAuthenticated: boolean;
-}
-
-const Frontpage: React.FC<FrontpageProps> = ({ isAuthenticated }) => {
+const Frontpage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchFrontpageData = async () => {
+    const fetchData = async () => {
       try {
         await apiService({ url: apiEndpoints.frontpage, method: "GET" });
       } catch (error) {
@@ -21,12 +17,11 @@ const Frontpage: React.FC<FrontpageProps> = ({ isAuthenticated }) => {
       }
     };
 
-    if (isAuthenticated) {
-      fetchFrontpageData();
-    }
-  }, [isAuthenticated]);
+    fetchData(); // This will automatically handle authentication checks
 
-  if (error || !isAuthenticated) {
+  }, []);
+
+  if (error) {
     return <ErrorComponent />;
   }
 
