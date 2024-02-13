@@ -1,18 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import apiEndpoints from "../services/apiEndpoints";
 import apiService from "../services/apiService";
 
 interface LoginProps {
+  isAuthenticated: boolean;
   setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Login: React.FC<LoginProps> = ({ setIsAuthenticated }) => {
+const Login: React.FC<LoginProps> = ({ isAuthenticated, setIsAuthenticated }) => {
   const navigate = useNavigate();
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/auth/frontpage");
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleLogin = async () => {
     try {

@@ -27,7 +27,7 @@ function App() {
         <Navbar isAuthenticated={isAuthenticated} setIsAuthentication={setIsAuthenticated} />
         <Routes>
           <Route path="/" element={<Navigate to="/auth/frontpage" />} />
-          <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
+          <Route path="/login" element={<Login isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />} />
           <Route path="/register" element={<Register />} />
           <Route path="/auth/frontpage" element={<Frontpage />} />
           <Route path="/auth/create-task" element={<CreateTask isAuthenticated={isAuthenticated} />} />
