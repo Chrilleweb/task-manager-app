@@ -26,8 +26,7 @@ const Login: React.FC<LoginProps> = ({ isAuthenticated, setIsAuthenticated }) =>
       const response = await apiService({
         url: apiEndpoints.login,
         method: "POST",
-        body: { username, password },
-        includeToken: false,
+        body: { username, password }
       });
 
       // Check if response is successful

@@ -22,8 +22,7 @@ const Register: React.FC = () => {
       const response = await apiService({
         url: apiEndpoints.register,
         method: "POST",
-        body: { username, password },
-        includeToken: false,
+        body: { username, password }
       });
 
       if (response) {
