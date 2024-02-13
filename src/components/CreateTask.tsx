@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import apiEndpoints from '../services/apiEndpoints';
 import apiService from '../services/apiService';
-import ErrorComponent from './ErrorComponent';
+import ErrorComponent from './errorPages/ErrorComponent';
 
 interface CreateTaskProps {
   isAuthenticated: boolean;

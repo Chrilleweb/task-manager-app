@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import ErrorComponent from "./ErrorComponent";
+import ErrorComponent from "./errorPages/ErrorComponent";
 import apiEndpoints from "../services/apiEndpoints";
 import apiService from "../services/apiService";
 import ViewTasks from "./Viewtasks";
