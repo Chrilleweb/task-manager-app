@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import apiEndpoints from "../services/apiEndpoints";
 import apiService from "../services/apiService";
+import { Link } from "react-router-dom";
 
 const Register: React.FC = () => {
   const [username, setUsername] = useState<string>("");
@@ -54,7 +55,12 @@ const Register: React.FC = () => {
       )}
       {success && (
         <div className="mb-4 text-green-500">
-          <p>{success}</p>
+          <div className="flex">
+            <p className="mr-2">{success}</p>
+            <Link to="/login" className="text-blue-500">
+              Login
+            </Link>
+          </div>
         </div>
       )}
       <div className="mb-4">
