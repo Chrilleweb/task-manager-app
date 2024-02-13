@@ -44,7 +44,7 @@ const ViewTasks: React.FC = () => {
               <strong>Due Date:</strong> {task.dueDate ? new Date(task.dueDate).toLocaleDateString() : 'Not specified'} <br />
               <strong>Subtasks: {task.subTasks}</strong> <br />
               <strong>Created by:</strong> {task.userName} <br />
-              <strong>Status:</strong> {task.completed} <br />
+              <strong>Status:</strong> {task.completed ? 'Completed' : 'Not Completed'} <br />
             </li>
           ))}
         </ul>

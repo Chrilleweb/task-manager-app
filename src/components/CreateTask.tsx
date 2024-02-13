@@ -8,6 +8,8 @@ const CreateTask: React.FC = () => {
   const [dueDate, setDueDate] = useState<string>(''); // Add dueDate state
   const [subTasks, setSubTasks] = useState<string[]>([]);
   const [newSubTask, setNewSubTask] = useState<string>('');
+  const [assignedTo, setAssignedTo] = useState<string[]>([]); 
+  const [newAssignedUser, setNewAssignedUser] = useState<string>(''); 
   const [success, setSuccess] = useState<string | null>(null);
   const getUserName = localStorage.getItem('username') || '';
 
@@ -16,13 +18,18 @@ const CreateTask: React.FC = () => {
     setNewSubTask('');
   };
 
+  const handleAddAssignedUser = () => {
+    setAssignedTo((prevAssignedUsers) => [...prevAssignedUsers, newAssignedUser]);
+    setNewAssignedUser('');
+  };
+
 
   const handleCreateTask = async () => {
     try {
       const response = await apiService({
         url: apiEndpoints.createTask,
         method: 'POST',
-        body: { title, description, dueDate, subTasks, userName: getUserName }, // Include dueDate in the request body
+        body: { title, description, dueDate, subTasks, userName: getUserName, assignedTo, }, // Include dueDate in the request body
       });
 
       if (response) {
@@ -32,6 +39,8 @@ const CreateTask: React.FC = () => {
         setDueDate('');
         setSubTasks([]);
         setNewSubTask('');
+        setAssignedTo([]);
+        setNewAssignedUser('');
       }
     } catch (error: any) {
       setSuccess(null);
@@ -103,6 +112,31 @@ const CreateTask: React.FC = () => {
         <ul className="list-disc pl-6">
           {subTasks.map((subTask, index) => (
             <li key={index}>{subTask}</li>
+          ))}
+        </ul>
+      </div>
+      <div className="mb-4">
+        <label htmlFor="assignedTo" className="block text-sm font-medium text-gray-600">
+          Assigned To:
+        </label>
+        <div className="flex items-center">
+          <input
+            type="text"
+            id="assignedTo"
+            className="mt-1 p-2 border rounded-md w-full"
+            value={newAssignedUser}
+            onChange={(e) => setNewAssignedUser(e.target.value)}
+          />
+          <button
+            className="bg-gray-300 text-gray-700 px-4 py-2 rounded ml-2 hover:bg-gray-400"
+            onClick={handleAddAssignedUser}
+          >
+            Add
+          </button>
+        </div>
+        <ul className="list-disc pl-6">
+          {assignedTo.map((user, index) => (
+            <li key={index}>{user}</li>
           ))}
         </ul>
       </div>
