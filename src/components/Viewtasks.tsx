@@ -4,7 +4,6 @@ import apiService from '../services/apiService';
 
 const ViewTasks: React.FC = () => {
   const [tasks, setTasks] = useState<any[]>([]);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -21,11 +20,9 @@ const ViewTasks: React.FC = () => {
           setTasks(response.tasks);
         } else {
           console.error('Invalid response format:', response);
-          setError('Error fetching tasks');
         }
       } catch (error: any) {
         console.error('Error fetching tasks:', error);
-        setError('Error fetching tasks');
       }
     };
   
