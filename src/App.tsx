@@ -19,7 +19,7 @@ function App() {
   
   return (
     <Router>
-      <div className="App container mx-auto 2xl:px-64 xl:px-32">
+      <div className="App container mx-auto">
         <Navbar isAuthenticated={isAuthenticated} setIsAuthentication={setIsAuthenticated} />
         <Routes>
           <Route path="/" element={<Navigate to="/auth/frontpage" />} />

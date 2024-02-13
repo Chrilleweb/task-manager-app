@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../images/task-manager-logo.svg";
 import userIcon from "../images/user-icon.svg";
@@ -13,17 +13,21 @@ const Navbar: React.FC<NavbarProps> = ({
   setIsAuthentication,
 }) => {
   const navigate = useNavigate();
+  const [username, setUsername] = useState<string>("");
+
+  useEffect(() => {
+    const storedUsername = localStorage.getItem("username");
+    setUsername(storedUsername ? storedUsername : "");
+  }, [isAuthenticated]);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("username");
     setIsAuthentication(false);
-    navigate("/login");
-
+    setUsername("");
     navigate("/login");
   };
 
-  const username = localStorage.getItem("username");
   const usernameUpperCase = username
     ? username.charAt(0).toUpperCase() + username.slice(1)
     : "";
@@ -68,3 +72,4 @@ const Navbar: React.FC<NavbarProps> = ({
 };
 
 export default Navbar;
+
