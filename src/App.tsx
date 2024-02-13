@@ -27,7 +27,7 @@ function App() {
           <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
           <Route path="/register" element={<Register />} />
           <Route path="/auth/frontpage" element={<Frontpage isAuthenticated={isAuthenticated} />} />
-          <Route path="/auth/create-task" element={<CreateTask />} />
+          <Route path="/auth/create-task" element={<CreateTask isAuthenticated={isAuthenticated} />} />
         </Routes>
         <Footer />
       </div>

@@ -1,8 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import apiEndpoints from '../services/apiEndpoints';
 import apiService from '../services/apiService';
+import ErrorComponent from './ErrorComponent';
 
-const CreateTask: React.FC = () => {
+interface CreateTaskProps {
+  isAuthenticated: boolean;
+}
+
+const CreateTask: React.FC<CreateTaskProps> = ({ isAuthenticated }) => {
   const [title, setTitle] = useState<string>('');
   const [description, setDescription] = useState<string>('');
   const [dueDate, setDueDate] = useState<string>(''); // Add dueDate state
@@ -10,8 +15,24 @@ const CreateTask: React.FC = () => {
   const [newSubTask, setNewSubTask] = useState<string>('');
   const [assignedTo, setAssignedTo] = useState<string[]>([]); 
   const [newAssignedUser, setNewAssignedUser] = useState<string>(''); 
+  const [error, setError] = useState<boolean>(false); 
   const [success, setSuccess] = useState<string | null>(null);
   const getUserName = localStorage.getItem('username') || '';
+
+  useEffect(() => {
+    const checkAuthentication = async () => {
+      try {
+        if (!isAuthenticated) {
+          setError(true);
+        }
+      } catch (error) {
+        console.error('Error checking authentication:', error);
+        setError(true);
+      }
+    };
+
+    checkAuthentication();
+  }, [isAuthenticated]);
 
   const handleAddSubTask = () => {
     setSubTasks((prevSubTasks) => [...prevSubTasks, newSubTask]);
@@ -48,6 +69,10 @@ const CreateTask: React.FC = () => {
   };
 
   return (
+    <div>
+    {error ? (
+      <ErrorComponent />
+    ) : (
     <div className="max-w-sm mx-auto mt-10 p-6 bg-white rounded shadow-md mb-24">
       <h2 className="text-2xl font-semibold mb-4">Create Task</h2>
       {success && (
@@ -147,7 +172,9 @@ const CreateTask: React.FC = () => {
         Create Task
       </button>
     </div>
+  )}
+  </div>
   );
-};
+}
 
 export default CreateTask;
