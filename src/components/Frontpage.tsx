@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import ErrorComponent from "./ErrorComponent";
 import apiEndpoints from "../services/apiEndpoints";
 import apiService from "../services/apiService";
-import CreateTask from "./CreateTask";
 import ViewTasks from "./Viewtasks";
 
 const Frontpage = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
@@ -28,13 +27,12 @@ const Frontpage = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
   }
 
   return (
-    <div className="pb-16">
+    <div className="mb-24">
     <div className="text-center mt-10">
       <h1 className="text-4xl font-bold mb-4">Welcome to the Frontpage</h1>
       <p className="text-lg text-gray-600">This is the main page.</p>
     </div>
     <ViewTasks />
-    <CreateTask />
     </div>
   );
 };

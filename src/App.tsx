@@ -6,6 +6,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import Frontpage from './components/Frontpage';
 import Footer from './components/Footer';
+import CreateTask from './components/CreateTask';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -26,6 +27,7 @@ function App() {
           <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
           <Route path="/register" element={<Register />} />
           <Route path="/auth/frontpage" element={<Frontpage isAuthenticated={isAuthenticated} />} />
+          <Route path="/auth/create-task" element={<CreateTask />} />
         </Routes>
         <Footer />
       </div>

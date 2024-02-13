@@ -32,44 +32,50 @@ const Navbar: React.FC<NavbarProps> = ({
     ? username.charAt(0).toUpperCase() + username.slice(1)
     : "";
 
-  return (
-    <nav className="flex justify-between items-center py-4">
-      <Link
-        to="/auth/frontpage"
-        className="flex items-center text-2xl font-bold text-gray-800"
-      >
-        <img
-          src={logo}
-          alt="Task Manager Logo"
-          width="24"
-          height="24"
-          className="mr-2"
-        />
-        Task manager
-      </Link>
-      <div>
-        {isAuthenticated ? (
-          <div className="flex items-center">
-            <img src={userIcon} alt="User Icon" width="24" className="mr-2" />
-            <p className="mr-4">{usernameUpperCase}</p>
-            <button className="p-2" onClick={handleLogout}>
-              Logout
-            </button>
-          </div>
-        ) : (
-          <>
-            <Link to="/login" className="p-2">
-              Login
+    return (
+      <nav className="flex justify-between items-center py-4">
+        <div className="flex items-center">
+          <Link
+            to="/auth/frontpage"
+            className="flex items-center text-2xl font-bold text-gray-800"
+          >
+            <img
+              src={logo}
+              alt="Task Manager Logo"
+              width="24"
+              height="24"
+              className="mr-2"
+            />
+            Task manager
+          </Link>
+          {isAuthenticated && (
+            <Link to="/auth/create-task" className="ml-4 mt-1 p-2 text-center">
+              Create Task
             </Link>
-            <Link to="/register" className="p-2">
-              Register
-            </Link>
-          </>
-        )}
-      </div>
-    </nav>
-  );
-};
-
-export default Navbar;
-
+          )}
+        </div>
+        <div>
+          {isAuthenticated ? (
+            <div className="flex items-center">
+              <img src={userIcon} alt="User Icon" width="24" className="mr-2" />
+              <p className="mr-4">{usernameUpperCase}</p>
+              <button className="p-2" onClick={handleLogout}>
+                Logout
+              </button>
+            </div>
+          ) : (
+            <>
+              <Link to="/login" className="p-2">
+                Login
+              </Link>
+              <Link to="/register" className="p-2">
+                Register
+              </Link>
+            </>
+          )}
+        </div>
+      </nav>
+    );
+  };
+  
+  export default Navbar;
