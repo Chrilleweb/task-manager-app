@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import apiEndpoints from "../services/apiEndpoints";
 import apiService from "../services/apiService";
+import { Link } from "react-router-dom";
 
 const ViewTasks: React.FC = () => {
   const [tasks, setTasks] = useState<any[]>([]);
@@ -35,42 +36,38 @@ const ViewTasks: React.FC = () => {
         <h1 className="text-4xl font-bold mb-4 text-center">Task List</h1>
         <ul className="grid gap-4">
           {tasks.map((task) => (
-            <li key={task._id} className="bg-white p-4 rounded shadow-md">
-              <div className="mb-2">
-                <strong className="text-lg">{task.title}</strong>
-              </div>
-              <div className="text-gray-700 mb-2">
-                <strong>Description:</strong> {task.description}
-              </div>
-              <div className="text-gray-700 mb-2">
-                <strong>Due Date:</strong>{" "}
-                {task.dueDate
-                  ? new Date(task.dueDate).toLocaleDateString()
-                  : "Not specified"}
-              </div>
-              <div className="text-gray-700 mb-2">
-                <strong>Subtasks:</strong>{" "}
-                {task.subTasks.length > 0 ? task.subTasks.join(", ") : "None"}
-              </div>
-              <div className="text-gray-700 mb-2">
-                <strong>Created by:</strong> {task.userName}
-              </div>
-              <div className="text-gray-700 mb-2">
-                <strong>Status:</strong>{" "}
-                {task.completed ? "Completed" : "Not Completed"}
-              </div>
-              <button
-                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-                //onClick={() => handleEditTask(task._id)}
-              >
-                Edit
-              </button>
-            </li>
+            <Link to={`/tasks/${task._id}`} key={task._id}>
+              <li className="bg-slate-200 p-4 rounded shadow-md">
+                <div className="mb-2">
+                  <strong className="text-lg">{task.title}</strong>
+                </div>
+                <div className="text-gray-700 mb-2">
+                  <strong>Description:</strong> {task.description}
+                </div>
+                <div className="text-gray-700 mb-2">
+                  <strong>Due Date:</strong>{" "}
+                  {task.dueDate
+                    ? new Date(task.dueDate).toLocaleDateString()
+                    : "Not specified"}
+                </div>
+                <div className="text-gray-700 mb-2">
+                  <strong>Subtasks:</strong>{" "}
+                  {task.subTasks.length > 0 ? task.subTasks.join(", ") : "None"}
+                </div>
+                <div className="text-gray-700 mb-2">
+                  <strong>Created by:</strong> {task.userName}
+                </div>
+                <div className="text-gray-700 mb-2">
+                  <strong>Status:</strong>{" "}
+                  {task.completed ? "Completed" : "Not Completed"}
+                </div>
+              </li>
+            </Link>
           ))}
         </ul>
       </div>
     </div>
   );
-};
+}  
 
 export default ViewTasks;
