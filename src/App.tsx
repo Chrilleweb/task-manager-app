@@ -8,7 +8,7 @@ import Frontpage from './components/Frontpage';
 import Footer from './components/Footer';
 import CreateTask from './components/CreateTask';
 import ErrorPageNotFound from './components/errorPages/ErrorPageNotFound';
-import ViewTaskId from './components/ViewTaskId';
+import ViewTaskId from './components/TaskDetails';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
