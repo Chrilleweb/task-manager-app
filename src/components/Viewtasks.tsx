@@ -14,13 +14,8 @@ const ViewTasks: React.FC = () => {
           method: "GET",
         });
 
-        console.log("Full Response:", response); // Log the entire response
-
         if (response && response.tasks && Array.isArray(response.tasks)) {
-          console.log("Tasks:", response.tasks);
           setTasks(response.tasks);
-        } else {
-          console.error("Invalid response format:", response);
         }
       } catch (error: any) {
         console.error("Error fetching tasks:", error);
@@ -36,7 +31,7 @@ const ViewTasks: React.FC = () => {
         <h1 className="text-4xl font-bold mb-4 text-center">Task List</h1>
         <ul className="grid gap-4">
           {tasks.map((task) => (
-            <Link to={`/tasks/${task._id}`} key={task._id}>
+            <Link to={`/auth/view-task/${task._id}`} key={task._id}>
               <li className="bg-slate-200 p-4 rounded shadow-md">
                 <div className="mb-2">
                   <strong className="text-lg">{task.title}</strong>
@@ -68,6 +63,6 @@ const ViewTasks: React.FC = () => {
       </div>
     </div>
   );
-}  
+};
 
 export default ViewTasks;

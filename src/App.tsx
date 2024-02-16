@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import './css/global.css';
 import Navbar from './components/Navbar';
@@ -8,6 +8,7 @@ import Frontpage from './components/Frontpage';
 import Footer from './components/Footer';
 import CreateTask from './components/CreateTask';
 import ErrorPageNotFound from './components/errorPages/ErrorPageNotFound';
+import ViewTaskId from './components/ViewTaskId';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -20,7 +21,7 @@ function App() {
       setIsAuthenticated(false);
     }
   }, []);
-  
+
   return (
     <Router>
       <div className="App container mx-auto">
@@ -31,6 +32,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/auth/frontpage" element={<Frontpage isAuthenticated={isAuthenticated} />} />
           <Route path="/auth/create-task" element={<CreateTask isAuthenticated={isAuthenticated} />} />
+          <Route path="/auth/view-task/:id" element={<ViewTaskId />} />
           <Route path="*" element={<ErrorPageNotFound />} />
         </Routes>
         <Footer />
