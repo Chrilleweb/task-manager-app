@@ -17,6 +17,7 @@ const EditTask: React.FC<EditTaskProps> = ({ isAuthenticated }) => {
   const [newSubTask, setNewSubTask] = useState<string>("");
   const [assignedTo, setAssignedTo] = useState<string[]>([]);
   const [newAssignedUser, setNewAssignedUser] = useState<string>("");
+  const [completed, setCompleted] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const [success, setSuccess] = useState<string | null>(null);
   const getUserName = localStorage.getItem("username") || "";
@@ -54,6 +55,7 @@ const EditTask: React.FC<EditTaskProps> = ({ isAuthenticated }) => {
           setDueDate(formatDate(taskDetails.dueDate || "") || "");
           setSubTasks(taskDetails.subTasks || []);
           setAssignedTo(taskDetails.assignedTo || []);
+          setCompleted(taskDetails.completed || false);
         } else {
           console.error("Invalid or empty response from the API");
         }
@@ -94,6 +96,7 @@ const EditTask: React.FC<EditTaskProps> = ({ isAuthenticated }) => {
           subTasks,
           userName: getUserName,
           assignedTo,
+          completed,
         },
       });
 
@@ -213,6 +216,16 @@ const EditTask: React.FC<EditTaskProps> = ({ isAuthenticated }) => {
               ))}
             </ul>
           </div>
+          <div className="mb-4">
+            <strong>Completed:</strong> {completed}
+            <input
+              type="checkbox"
+              id="completed"
+              className="ml-2"
+              checked={completed}
+              onChange={(e) => setCompleted(e.target.checked)}
+            />
+            </div>
           <button
             className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400"
             onClick={handleEditTask}
