@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import apiEndpoints from "../services/apiEndpoints";
 import apiService from "../services/apiService";
 import ErrorComponent from "./errorPages/ErrorComponent";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 interface EditTaskProps {
   isAuthenticated: boolean;
@@ -10,6 +10,7 @@ interface EditTaskProps {
 
 const EditTask: React.FC<EditTaskProps> = ({ isAuthenticated }) => {
   const { id } = useParams();
+  const navigate = useNavigate(); 
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [dueDate, setDueDate] = useState<string>("");
@@ -102,6 +103,7 @@ const EditTask: React.FC<EditTaskProps> = ({ isAuthenticated }) => {
 
       if (response) {
         setSuccess("Task edited successfully!");
+        navigate(`/auth/view-task/${id}`);
       }
     } catch (error: any) {
       setSuccess(null);
