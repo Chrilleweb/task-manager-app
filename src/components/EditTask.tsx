@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import apiEndpoints from '../services/apiEndpoints';
-import apiService from '../services/apiService';
-import ErrorComponent from './errorPages/ErrorComponent';
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import apiEndpoints from "../services/apiEndpoints";
+import apiService from "../services/apiService";
+import ErrorComponent from "./errorPages/ErrorComponent";
+import { useParams } from "react-router-dom";
 
 interface EditTaskProps {
   isAuthenticated: boolean;
@@ -10,16 +10,22 @@ interface EditTaskProps {
 
 const EditTask: React.FC<EditTaskProps> = ({ isAuthenticated }) => {
   const { id } = useParams();
-  const [title, setTitle] = useState<string>('');
-  const [description, setDescription] = useState<string>('');
-  const [dueDate, setDueDate] = useState<string>('');
+  const [title, setTitle] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [dueDate, setDueDate] = useState<string>("");
   const [subTasks, setSubTasks] = useState<string[]>([]);
-  const [newSubTask, setNewSubTask] = useState<string>('');
+  const [newSubTask, setNewSubTask] = useState<string>("");
   const [assignedTo, setAssignedTo] = useState<string[]>([]);
-  const [newAssignedUser, setNewAssignedUser] = useState<string>('');
+  const [newAssignedUser, setNewAssignedUser] = useState<string>("");
   const [error, setError] = useState<boolean>(false);
   const [success, setSuccess] = useState<string | null>(null);
-  const getUserName = localStorage.getItem('username') || '';
+  const getUserName = localStorage.getItem("username") || "";
+
+  const formatDate = (date: string | undefined) => {
+    if (!date) return "";
+    const dateObj = new Date(date);
+    return dateObj.toISOString().split("T")[0];
+  };
 
   useEffect(() => {
     const checkAuthentication = async () => {
@@ -28,7 +34,7 @@ const EditTask: React.FC<EditTaskProps> = ({ isAuthenticated }) => {
           setError(true);
         }
       } catch (error) {
-        console.error('Error checking authentication:', error);
+        console.error("Error checking authentication:", error);
         setError(true);
       }
     };
@@ -36,23 +42,23 @@ const EditTask: React.FC<EditTaskProps> = ({ isAuthenticated }) => {
     const fetchTaskDetails = async () => {
       try {
         const response = await apiService({
-          url: apiEndpoints.taskDetails(id || ''),
-          method: 'GET',
+          url: apiEndpoints.taskDetails(id || ""),
+          method: "GET",
         });
 
         if (response) {
-            const taskDetails = response.task;
+          const taskDetails = response.task;
 
-          setTitle(taskDetails.title || '');
-          setDescription(taskDetails.description || '');
-          setDueDate(taskDetails.dueDate || '');
+          setTitle(taskDetails.title || "");
+          setDescription(taskDetails.description || "");
+          setDueDate(formatDate(taskDetails.dueDate || "") || "");
           setSubTasks(taskDetails.subTasks || []);
           setAssignedTo(taskDetails.assignedTo || []);
         } else {
-            console.error('Invalid or empty response from the API');
-            }
+          console.error("Invalid or empty response from the API");
+        }
       } catch (error) {
-        console.error('Error fetching task details:', error);
+        console.error("Error fetching task details:", error);
         // Handle error, show an error message, etc.
       }
     };
@@ -65,24 +71,34 @@ const EditTask: React.FC<EditTaskProps> = ({ isAuthenticated }) => {
 
   const handleAddSubTask = () => {
     setSubTasks((prevSubTasks) => [...prevSubTasks, newSubTask]);
-    setNewSubTask('');
+    setNewSubTask("");
   };
 
   const handleAddAssignedUser = () => {
-    setAssignedTo((prevAssignedUsers) => [...prevAssignedUsers, newAssignedUser]);
-    setNewAssignedUser('');
+    setAssignedTo((prevAssignedUsers) => [
+      ...prevAssignedUsers,
+      newAssignedUser,
+    ]);
+    setNewAssignedUser("");
   };
 
   const handleEditTask = async () => {
     try {
       const response = await apiService({
-        url: apiEndpoints.editDetails(id || ''),
-        method: 'PUT',
-        body: { title, description, dueDate, subTasks, userName: getUserName, assignedTo },
+        url: apiEndpoints.editDetails(id || ""),
+        method: "PUT",
+        body: {
+          title,
+          description,
+          dueDate,
+          subTasks,
+          userName: getUserName,
+          assignedTo,
+        },
       });
 
       if (response) {
-        setSuccess('Task edited successfully!');
+        setSuccess("Task edited successfully!");
       }
     } catch (error: any) {
       setSuccess(null);
@@ -98,7 +114,10 @@ const EditTask: React.FC<EditTaskProps> = ({ isAuthenticated }) => {
           <h2 className="text-2xl font-semibold mb-4">Edit Task</h2>
           {success && <div className="mb-4 text-green-600">{success}</div>}
           <div className="mb-4">
-            <label htmlFor="title" className="block text-sm font-medium text-gray-600">
+            <label
+              htmlFor="title"
+              className="block text-sm font-medium text-gray-600"
+            >
               Title:
             </label>
             <input
@@ -110,7 +129,10 @@ const EditTask: React.FC<EditTaskProps> = ({ isAuthenticated }) => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="description" className="block text-sm font-medium text-gray-600">
+            <label
+              htmlFor="description"
+              className="block text-sm font-medium text-gray-600"
+            >
               Description:
             </label>
             <textarea
@@ -121,7 +143,10 @@ const EditTask: React.FC<EditTaskProps> = ({ isAuthenticated }) => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="dueDate" className="block text-sm font-medium text-gray-600">
+            <label
+              htmlFor="dueDate"
+              className="block text-sm font-medium text-gray-600"
+            >
               Due Date:
             </label>
             <input
@@ -133,7 +158,10 @@ const EditTask: React.FC<EditTaskProps> = ({ isAuthenticated }) => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="subTask" className="block text-sm font-medium text-gray-600">
+            <label
+              htmlFor="subTask"
+              className="block text-sm font-medium text-gray-600"
+            >
               Sub Tasks:
             </label>
             <div className="flex items-center">
@@ -158,7 +186,10 @@ const EditTask: React.FC<EditTaskProps> = ({ isAuthenticated }) => {
             </ul>
           </div>
           <div className="mb-4">
-            <label htmlFor="assignedTo" className="block text-sm font-medium text-gray-600">
+            <label
+              htmlFor="assignedTo"
+              className="block text-sm font-medium text-gray-600"
+            >
               Assigned To:
             </label>
             <div className="flex items-center">
@@ -195,5 +226,3 @@ const EditTask: React.FC<EditTaskProps> = ({ isAuthenticated }) => {
 };
 
 export default EditTask;
-
-
