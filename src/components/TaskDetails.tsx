@@ -1,7 +1,7 @@
 import apiService from "../services/apiService";
 import apiEndpoints from "../services/apiEndpoints";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import ErrorPageNotFound from "./errorPages/ErrorPageNotFound";
 
 interface ViewTaskResponse {
@@ -92,6 +92,9 @@ const TaskDetails: React.FC = () => {
             <span>None</span>
           )}
         </div>
+        <Link to={`/auth/edit-task/${task._id}`} className="text-blue-500">
+          Edit task
+          </Link>
       </div>
     </div>
   );
