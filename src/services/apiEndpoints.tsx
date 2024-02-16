@@ -6,7 +6,7 @@ const apiEndpoints = {
   frontpage: `${API_BASE_URL}/auth/frontpage`,
   createTask: `${API_BASE_URL}/auth/create-task`,
   viewTasks: `${API_BASE_URL}/auth/view-tasks`,
-  viewTaskId: (id: string) => `${API_BASE_URL}/auth/view-task/${id}`,
+  taskDetails: (id: string) => `${API_BASE_URL}/auth/view-task/${id}`,
 };
 
 export default apiEndpoints;

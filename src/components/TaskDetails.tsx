@@ -15,7 +15,7 @@ interface ViewTaskResponse {
   completed: boolean;
 }
 
-const ViewTaskId: React.FC = () => {
+const TaskDetails: React.FC = () => {
   const { id } = useParams();
   const [task, setTask] = useState<ViewTaskResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -24,7 +24,7 @@ const ViewTaskId: React.FC = () => {
     const fetchTask = async () => {
       try {
         const response = await apiService({
-          url: apiEndpoints.viewTaskId(id || ""),
+          url: apiEndpoints.taskDetails(id || ""),
           method: "GET",
         });
 
@@ -97,4 +97,4 @@ const ViewTaskId: React.FC = () => {
   );
 };
 
-export default ViewTaskId;
+export default TaskDetails;

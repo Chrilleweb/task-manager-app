@@ -8,7 +8,7 @@ import Frontpage from './components/Frontpage';
 import Footer from './components/Footer';
 import CreateTask from './components/CreateTask';
 import ErrorPageNotFound from './components/errorPages/ErrorPageNotFound';
-import ViewTaskId from './components/TaskDetails';
+import TaskDetails from './components/TaskDetails';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -32,7 +32,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/auth/frontpage" element={<Frontpage isAuthenticated={isAuthenticated} />} />
           <Route path="/auth/create-task" element={<CreateTask isAuthenticated={isAuthenticated} />} />
-          <Route path="/auth/view-task/:id" element={<ViewTaskId />} />
+          <Route path="/auth/view-task/:id" element={<TaskDetails />} />
           <Route path="*" element={<ErrorPageNotFound />} />
         </Routes>
         <Footer />
