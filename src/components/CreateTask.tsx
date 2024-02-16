@@ -31,7 +31,9 @@ const CreateTask: React.FC<CreateTaskProps> = ({ isAuthenticated }) => {
       }
     };
 
-    checkAuthentication();
+    if(isAuthenticated){
+     checkAuthentication();
+    }
   }, [isAuthenticated]);
 
   const handleAddSubTask = () => {
@@ -70,7 +72,7 @@ const CreateTask: React.FC<CreateTaskProps> = ({ isAuthenticated }) => {
 
   return (
     <div>
-    {error ? (
+    {error || !isAuthenticated ? (
       <ErrorComponent />
     ) : (
     <div className="max-w-sm mx-auto mt-10 p-6 bg-white rounded shadow-md mb-24">
