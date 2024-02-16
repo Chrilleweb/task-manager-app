@@ -59,6 +59,15 @@ const ViewTaskId: React.FC = () => {
           <strong className="text-lg">{task.title}</strong>
         </div>
         <div className="text-gray-700 mb-2">
+          <strong>Created by:</strong> {task.userName}
+        </div>
+        <div className="text-gray-700 mb-2">
+          <strong>Assigned to:</strong>{" "}
+          {task.assignedTo && task.assignedTo.length > 0
+            ? task.assignedTo.join(", ")
+            : "None"}
+        </div>
+        <div className="text-gray-700 mb-2">
           <strong>Description:</strong> {task.description}
         </div>
         <div className="text-gray-700 mb-2">
@@ -68,23 +77,20 @@ const ViewTaskId: React.FC = () => {
             : "Not specified"}
         </div>
         <div className="text-gray-700 mb-2">
-          <strong>Subtasks:</strong>{" "}
-          {task.subTasks && task.subTasks.length > 0
-            ? task.subTasks.join(", ")
-            : "None"}
-        </div>
-        <div className="text-gray-700 mb-2">
-          <strong>Assigned to:</strong>{" "}
-          {task.assignedTo && task.assignedTo.length > 0
-            ? task.assignedTo.join(", ")
-            : "None"}
-        </div>
-        <div className="text-gray-700 mb-2">
-          <strong>Created by:</strong> {task.userName}
-        </div>
-        <div className="text-gray-700 mb-2">
           <strong>Status:</strong>{" "}
           {task.completed ? "Completed" : "Not Completed"}
+        </div>
+        <div className="text-gray-700 mb-2">
+          <strong>Subtasks:</strong>
+          {task.subTasks && task.subTasks.length > 0 ? (
+            <ul>
+              {task.subTasks.map((subTask, index) => (
+                <li key={index}>{subTask}</li>
+              ))}
+            </ul>
+          ) : (
+            <span>None</span>
+          )}
         </div>
       </div>
     </div>

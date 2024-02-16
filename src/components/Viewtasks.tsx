@@ -46,13 +46,6 @@ const ViewTasks: React.FC = () => {
                     : "Not specified"}
                 </div>
                 <div className="text-gray-700 mb-2">
-                  <strong>Subtasks:</strong>{" "}
-                  {task.subTasks.length > 0 ? task.subTasks.join(", ") : "None"}
-                </div>
-                <div className="text-gray-700 mb-2">
-                  <strong>Created by:</strong> {task.userName}
-                </div>
-                <div className="text-gray-700 mb-2">
                   <strong>Status:</strong>{" "}
                   {task.completed ? "Completed" : "Not Completed"}
                 </div>
