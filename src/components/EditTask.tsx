@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import apiEndpoints from "../services/apiEndpoints";
 import apiService from "../services/apiService";
 import ErrorComponent from "./errorPages/ErrorComponent";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 interface EditTaskProps {
   isAuthenticated: boolean;
@@ -256,12 +256,17 @@ const EditTask: React.FC<EditTaskProps> = ({ isAuthenticated }) => {
               onChange={(e) => setCompleted(e.target.checked)}
             />
           </div>
+          <div className="flex">
           <button
             className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400"
             onClick={handleEditTask}
           >
             Edit Task
           </button>
+          <Link to={`/auth/view-task/${id}`} className="text-blue-500 ml-4">
+            <button className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400">Go Back</button>
+          </Link>
+          </div>
         </div>
       )}
     </div>

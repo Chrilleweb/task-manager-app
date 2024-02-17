@@ -123,7 +123,7 @@ const TaskDetails: React.FC = () => {
           </div>
       </div>
       <Link to="/auth/frontpage" className="text-blue-500">
-          <button className="bg-blue-500 text-white px-4 py-2 rounded mt-6">
+          <button className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400 mt-6">
             Go back
           </button>
         </Link>
