@@ -1,7 +1,7 @@
 import apiService from "../services/apiService";
 import apiEndpoints from "../services/apiEndpoints";
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import ErrorPageNotFound from "./errorPages/ErrorPageNotFound";
 
 interface ViewTaskResponse {
@@ -16,6 +16,7 @@ interface ViewTaskResponse {
 }
 
 const TaskDetails: React.FC = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const [task, setTask] = useState<ViewTaskResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -50,6 +51,26 @@ const TaskDetails: React.FC = () => {
   if (!task) {
     return <ErrorPageNotFound />;
   }
+
+  const handleDelete = async () => {
+    try {
+        await apiService({
+        url: apiEndpoints.deleteTask(id || ""),
+        method: "DELETE",
+      });
+
+    } catch (error: any) {
+      console.error("Error deleting task:", error);
+      setError("Error deleting task");
+    }
+  };
+
+  const handleDeleteClick = () => {
+    if (window.confirm(`Are you sure you want to delete "${task.title}"?`)) {
+      handleDelete();
+      navigate("/auth/frontpage");
+    }
+  };
 
   return (
     <div className="text-start mt-10">
@@ -92,9 +113,14 @@ const TaskDetails: React.FC = () => {
             <span>None</span>
           )}
         </div>
+        <div className="flex">
         <Link to={`/auth/edit-task/${task._id}`} className="text-blue-500">
           Edit task
           </Link>
+          <button onClick={handleDeleteClick} className="text-red-500 ml-auto">
+            Delete task
+          </button>
+          </div>
       </div>
     </div>
   );
