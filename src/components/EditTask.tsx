@@ -10,7 +10,7 @@ interface EditTaskProps {
 
 const EditTask: React.FC<EditTaskProps> = ({ isAuthenticated }) => {
   const { id } = useParams();
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [dueDate, setDueDate] = useState<string>("");
@@ -83,6 +83,18 @@ const EditTask: React.FC<EditTaskProps> = ({ isAuthenticated }) => {
       newAssignedUser,
     ]);
     setNewAssignedUser("");
+  };
+
+  const handleRemoveSubTask = (index: number) => {
+    const updatedSubTasks = [...subTasks];
+    updatedSubTasks.splice(index, 1);
+    setSubTasks(updatedSubTasks);
+  };
+
+  const handleRemoveAssignedUser = (index: number) => {
+    const updatedAssignedTo = [...assignedTo];
+    updatedAssignedTo.splice(index, 1);
+    setAssignedTo(updatedAssignedTo);
   };
 
   const handleEditTask = async () => {
@@ -186,7 +198,15 @@ const EditTask: React.FC<EditTaskProps> = ({ isAuthenticated }) => {
             </div>
             <ul className="list-disc pl-6">
               {subTasks.map((subTask, index) => (
-                <li key={index}>{subTask}</li>
+                <li key={index}>
+                  {subTask}
+                  <button
+                    className="text-red-500 ml-2"
+                    onClick={() => handleRemoveSubTask(index)}
+                  >
+                    Remove Subtask
+                  </button>
+                </li>
               ))}
             </ul>
           </div>
@@ -214,7 +234,15 @@ const EditTask: React.FC<EditTaskProps> = ({ isAuthenticated }) => {
             </div>
             <ul className="list-disc pl-6">
               {assignedTo.map((user, index) => (
-                <li key={index}>{user}</li>
+                <li key={index}>
+                  {user}
+                  <button
+                    className="text-red-500 ml-2"
+                    onClick={() => handleRemoveAssignedUser(index)}
+                  >
+                    Remove User
+                  </button>
+                </li>
               ))}
             </ul>
           </div>
@@ -227,7 +255,7 @@ const EditTask: React.FC<EditTaskProps> = ({ isAuthenticated }) => {
               checked={completed}
               onChange={(e) => setCompleted(e.target.checked)}
             />
-            </div>
+          </div>
           <button
             className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400"
             onClick={handleEditTask}
