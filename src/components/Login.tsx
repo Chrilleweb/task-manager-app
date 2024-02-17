@@ -32,7 +32,6 @@ const Login: React.FC<LoginProps> = ({ isAuthenticated, setIsAuthenticated }) =>
 
       // Check if response is successful
       if (response) {
-        console.log("Login successful. Token:", response.token);
         setError(null);
         setSuccess("Login successful!");
         localStorage.setItem("token", response.token);
