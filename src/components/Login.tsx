@@ -10,13 +10,14 @@ interface LoginProps {
 
 const Login: React.FC<LoginProps> = ({ isAuthenticated, setIsAuthenticated }) => {
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (isAuthenticated && token) {
       navigate("/auth/frontpage");
     }
   }, [isAuthenticated, navigate]);
