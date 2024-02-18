@@ -33,7 +33,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/auth/frontpage" element={<Frontpage isAuthenticated={isAuthenticated} />} />
           <Route path="/auth/create-task" element={<CreateTask isAuthenticated={isAuthenticated} />} />
-          <Route path="/auth/view-task/:id" element={<TaskDetails />} />
+          <Route path="/auth/view-task/:id" element={<TaskDetails isAuthenticated={isAuthenticated} />} />
           <Route path="/auth/edit-task/:id" element= {<EditTask isAuthenticated={isAuthenticated} />} /> 
           <Route path="*" element={<ErrorPageNotFound />} />
         </Routes>

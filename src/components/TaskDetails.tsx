@@ -3,6 +3,7 @@ import apiEndpoints from "../services/apiEndpoints";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import ErrorPageNotFound from "./errorPages/ErrorPageNotFound";
+import ErrorComponent from "./errorPages/ErrorComponent";
 
 interface SubTask {
   _id: string;
@@ -21,7 +22,11 @@ interface ViewTaskResponse {
   completed: boolean;
 }
 
-const TaskDetails: React.FC = () => {
+interface TaskDetailsProps {
+  isAuthenticated: boolean;
+}
+
+const TaskDetails: React.FC<TaskDetailsProps> = ({ isAuthenticated }) => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [task, setTask] = useState<ViewTaskResponse | null>(null);
@@ -50,11 +55,10 @@ const TaskDetails: React.FC = () => {
     fetchTask();
   }, [id]);
 
-  if (error) {
-    return <div>{error}</div>;
+  if (!isAuthenticated) {
+    return <ErrorComponent />;
   }
-
-  if (!task) {
+  if (error || !task) {
     return <ErrorPageNotFound />;
   }
 
