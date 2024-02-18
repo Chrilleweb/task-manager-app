@@ -32,7 +32,11 @@ const ViewTasks: React.FC = () => {
         <ul className="grid gap-4">
           {tasks.map((task) => (
             <Link to={`/auth/view-task/${task._id}`} key={task._id}>
-              <li className="bg-slate-200 p-4 rounded shadow-md">
+              <li
+                className={`p-4 rounded shadow-md ${
+                  task.completed ? 'bg-green-200' : 'bg-slate-200'
+                }`}
+              >
                 <div className="mb-2">
                   <strong className="text-lg">{task.title}</strong>
                 </div>
