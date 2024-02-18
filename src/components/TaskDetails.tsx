@@ -54,11 +54,10 @@ const TaskDetails: React.FC = () => {
 
   const handleDelete = async () => {
     try {
-        await apiService({
+      await apiService({
         url: apiEndpoints.deleteTask(id || ""),
         method: "DELETE",
       });
-
     } catch (error: any) {
       console.error("Error deleting task:", error);
       setError("Error deleting task");
@@ -72,8 +71,31 @@ const TaskDetails: React.FC = () => {
     }
   };
 
+  const handleTaskCompletionToggle = async () => {
+    try {
+      const updatedCompletedStatus = !task?.completed;
+
+      await apiService({
+        url: apiEndpoints.completeTask(id || ""),
+        method: "PATCH",
+        body: {
+          completed: updatedCompletedStatus,
+        },
+      });
+
+      console.log("Task completion request successful");
+
+      // Update the task locally
+      setTask((prevTask) =>
+        prevTask ? { ...prevTask, completed: updatedCompletedStatus } : prevTask
+      );
+    } catch (error: any) {
+      console.error("Error updating task completion:", error);
+    }
+  };
+
   return (
-    <div className="text-start mt-10">
+    <div className="text-start mt-10 mb-24">
       <h1 className="text-4xl font-bold mb-4 text-center">Task Details</h1>
       <div className="bg-slate-200 p-4 rounded shadow-md">
         <div className="mb-2">
@@ -98,10 +120,6 @@ const TaskDetails: React.FC = () => {
             : "Not specified"}
         </div>
         <div className="text-gray-700 mb-2">
-          <strong>Status:</strong>{" "}
-          {task.completed ? "Completed" : "Not Completed"}
-        </div>
-        <div className="text-gray-700 mb-2">
           <strong>Subtasks:</strong>
           {task.subTasks && task.subTasks.length > 0 ? (
             <ul>
@@ -113,20 +131,31 @@ const TaskDetails: React.FC = () => {
             <span>None</span>
           )}
         </div>
-        <div className="flex">
-        <Link to={`/auth/edit-task/${task._id}`} className="text-blue-500">
-          Edit task
+        <div className="flex items-center mb-2 mt-4">
+          <strong className="mr-2">Completed:</strong>
+          <label className="flex items-center cursor-pointer">
+            <input
+              type="checkbox"
+              className="form-checkbox h-5 w-5 text-blue-500"
+              checked={task.completed}
+              onChange={handleTaskCompletionToggle}
+            />
+          </label>
+        </div>
+        <div className="flex items-start mt-4">
+          <Link to={`/auth/edit-task/${task._id}`} className="text-blue-500">
+            Edit task
           </Link>
           <button onClick={handleDeleteClick} className="text-red-500 ml-auto">
             Delete task
           </button>
-          </div>
+        </div>
       </div>
       <Link to="/auth/frontpage" className="text-blue-500">
-          <button className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400 mt-6">
-            Go back
-          </button>
-        </Link>
+        <button className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400 mt-6">
+          Go back
+        </button>
+      </Link>
     </div>
   );
 };

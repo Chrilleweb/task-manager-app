@@ -9,6 +9,7 @@ const apiEndpoints = {
   taskDetails: (id: string) => `${API_BASE_URL}/auth/view-task/${id}`,
   editDetails: (id: string) => `${API_BASE_URL}/auth/edit-task/${id}`,
   deleteTask: (id: string) => `${API_BASE_URL}/auth/delete-task/${id}`,
+  completeTask: (id: string) => `${API_BASE_URL}/auth/complete-task/${id}`,
 };
 
 export default apiEndpoints;
