@@ -4,6 +4,12 @@ import apiService from "../services/apiService";
 import ErrorComponent from "./errorPages/ErrorComponent";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
+interface SubTask {
+  _id?: string;
+  name: string;
+  completed: boolean;
+}
+
 interface EditTaskProps {
   isAuthenticated: boolean;
 }
@@ -14,7 +20,7 @@ const EditTask: React.FC<EditTaskProps> = ({ isAuthenticated }) => {
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [dueDate, setDueDate] = useState<string>("");
-  const [subTasks, setSubTasks] = useState<string[]>([]);
+  const [subTasks, setSubTasks] = useState<SubTask[]>([]);
   const [newSubTask, setNewSubTask] = useState<string>("");
   const [assignedTo, setAssignedTo] = useState<string[]>([]);
   const [newAssignedUser, setNewAssignedUser] = useState<string>("");
@@ -73,7 +79,7 @@ const EditTask: React.FC<EditTaskProps> = ({ isAuthenticated }) => {
   }, [isAuthenticated, id]);
 
   const handleAddSubTask = () => {
-    setSubTasks((prevSubTasks) => [...prevSubTasks, newSubTask]);
+    setSubTasks((prevSubTasks) => [...prevSubTasks, { name: newSubTask, completed: false }]);
     setNewSubTask("");
   };
 
@@ -197,18 +203,19 @@ const EditTask: React.FC<EditTaskProps> = ({ isAuthenticated }) => {
               </button>
             </div>
             <ul className="list-disc pl-6">
-              {subTasks.map((subTask, index) => (
-                <li key={index}>
-                  {subTask}
-                  <button
-                    className="text-red-500 ml-2"
-                    onClick={() => handleRemoveSubTask(index)}
-                  >
-                    Remove Subtask
-                  </button>
-                </li>
-              ))}
-            </ul>
+  {subTasks.map((subTask, index) => (
+    <li key={index}>
+      {subTask.name}
+      <button
+        className="text-red-500 ml-2"
+        onClick={() => handleRemoveSubTask(index)}
+      >
+        Remove Subtask
+      </button>
+    </li>
+  ))}
+</ul>
+
           </div>
           <div className="mb-4">
             <label
