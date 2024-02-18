@@ -41,9 +41,21 @@ const CreateTask: React.FC<CreateTaskProps> = ({ isAuthenticated }) => {
     setNewSubTask('');
   };
 
+  const handleRemoveSubTask = (index: number) => {
+    const updatedSubTasks = [...subTasks];
+    updatedSubTasks.splice(index, 1);
+    setSubTasks(updatedSubTasks);
+  };
+
   const handleAddAssignedUser = () => {
     setAssignedTo((prevAssignedUsers) => [...prevAssignedUsers, newAssignedUser]);
     setNewAssignedUser('');
+  };
+
+  const handleRemoveAssignedUser = (index: number) => {
+    const updatedAssignedTo = [...assignedTo];
+    updatedAssignedTo.splice(index, 1);
+    setAssignedTo(updatedAssignedTo);
   };
 
 
@@ -119,55 +131,71 @@ const CreateTask: React.FC<CreateTaskProps> = ({ isAuthenticated }) => {
         />
       </div>
       <div className="mb-4">
-        <label htmlFor="subTask" className="block text-sm font-medium text-gray-600">
-          Sub Tasks:
-        </label>
-        <div className="flex items-center">
-          <input
-            type="text"
-            id="subTask"
-            className="mt-1 p-2 border rounded-md w-full"
-            value={newSubTask}
-            onChange={(e) => setNewSubTask(e.target.value)}
-          />
-          <button
-            className="bg-gray-300 text-gray-700 px-4 py-2 rounded ml-2 hover:bg-gray-400"
-            onClick={handleAddSubTask}
-          >
-            Add
-          </button>
-        </div>
-        <ul className="list-disc pl-6">
-          {subTasks.map((subTask, index) => (
-            <li key={index}>{subTask}</li>
-          ))}
-        </ul>
-      </div>
-      <div className="mb-4">
-        <label htmlFor="assignedTo" className="block text-sm font-medium text-gray-600">
-          Assigned To:
-        </label>
-        <div className="flex items-center">
-          <input
-            type="text"
-            id="assignedTo"
-            className="mt-1 p-2 border rounded-md w-full"
-            value={newAssignedUser}
-            onChange={(e) => setNewAssignedUser(e.target.value)}
-          />
-          <button
-            className="bg-gray-300 text-gray-700 px-4 py-2 rounded ml-2 hover:bg-gray-400"
-            onClick={handleAddAssignedUser}
-          >
-            Add
-          </button>
-        </div>
-        <ul className="list-disc pl-6">
-          {assignedTo.map((user, index) => (
-            <li key={index}>{user}</li>
-          ))}
-        </ul>
-      </div>
+            <label htmlFor="subTask" className="block text-sm font-medium text-gray-600">
+              Sub Tasks:
+            </label>
+            <div className="flex items-center">
+              <input
+                type="text"
+                id="subTask"
+                className="mt-1 p-2 border rounded-md w-full"
+                value={newSubTask}
+                onChange={(e) => setNewSubTask(e.target.value)}
+              />
+              <button
+                className="bg-gray-300 text-gray-700 px-4 py-2 rounded ml-2 hover:bg-gray-400"
+                onClick={handleAddSubTask}
+              >
+                Add
+              </button>
+            </div>
+            <ul className="list-disc pl-6">
+              {subTasks.map((subTask, index) => (
+                <li key={index}>
+                  {subTask}
+                  <button
+                    className="text-red-500 ml-2"
+                    onClick={() => handleRemoveSubTask(index)}
+                  >
+                    Remove Subtask
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="mb-4">
+            <label htmlFor="assignedTo" className="block text-sm font-medium text-gray-600">
+              Assigned To:
+            </label>
+            <div className="flex items-center">
+              <input
+                type="text"
+                id="assignedTo"
+                className="mt-1 p-2 border rounded-md w-full"
+                value={newAssignedUser}
+                onChange={(e) => setNewAssignedUser(e.target.value)}
+              />
+              <button
+                className="bg-gray-300 text-gray-700 px-4 py-2 rounded ml-2 hover:bg-gray-400"
+                onClick={handleAddAssignedUser}
+              >
+                Add
+              </button>
+            </div>
+            <ul className="list-disc pl-6">
+              {assignedTo.map((user, index) => (
+                <li key={index}>
+                  {user}
+                  <button
+                    className="text-red-500 ml-2"
+                    onClick={() => handleRemoveAssignedUser(index)}
+                  >
+                    Remove User
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
       <button
         className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400"
         onClick={handleCreateTask}
