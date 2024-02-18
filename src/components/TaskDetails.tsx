@@ -149,51 +149,58 @@ const TaskDetails: React.FC = () => {
             : "Not specified"}
         </div>
         <div className="text-gray-700 mb-2">
-        <strong>Subtasks:</strong>
-        {task.subTasks && task.subTasks.length > 0 ? (
-          <ul>
-            {task.subTasks.map((subTask) => (
-              <li key={subTask._id}>
-                <label className="flex items-center cursor-pointer">
-                  <input
-                    type="checkbox"
-                    className="form-checkbox h-5 w-5 text-blue-500"
-                    checked={subTask.completed}
-                    onChange={() => handleSubtaskCompletionToggle(subTask._id)}
-                  />
-                  <span
-                    className={`ml-2 ${
-                      subTask.completed ? 'text-green-500' : ''
-                    }`}
-                  >
-                    {subTask.name}
-                  </span>
-                </label>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <span>None</span>
-        )}
-      </div>
-        <div className="flex items-center mb-2 mt-4">
-          <strong className="mr-2">Completed:</strong>
-          <label className="flex items-center cursor-pointer">
-            <input
-              type="checkbox"
-              className="form-checkbox h-5 w-5 text-blue-500"
-              checked={task.completed}
-              onChange={handleTaskCompletionToggle}
-            />
-          </label>
+          <strong>Subtasks:</strong>
+          {task.subTasks && task.subTasks.length > 0 ? (
+            <ul>
+              {task.subTasks.map((subTask) => (
+                <li key={subTask._id}>
+                  <label className="flex items-center cursor-pointer">
+                    <input
+                      type="checkbox"
+                      className="form-checkbox h-5 w-5 text-blue-500"
+                      checked={subTask.completed}
+                      onChange={() =>
+                        handleSubtaskCompletionToggle(subTask._id)
+                      }
+                    />
+                    <span
+                      className={`ml-2 ${
+                        subTask.completed ? "text-green-500" : ""
+                      }`}
+                    >
+                      {subTask.name}
+                    </span>
+                  </label>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <span>None</span>
+          )}
         </div>
-        <div className="flex items-start mt-4">
-          <Link to={`/auth/edit-task/${task._id}`} className="text-blue-500">
-            Edit task
-          </Link>
-          <button onClick={handleDeleteClick} className="text-red-500 ml-auto">
-            Delete task
-          </button>
+        <div className="flex items-center justify-between mt-4">
+          <div className="flex items-center">
+            <strong className="mr-2">Completed:</strong>
+            <label className="flex items-center cursor-pointer">
+              <input
+                type="checkbox"
+                className="form-checkbox h-5 w-5 text-blue-500"
+                checked={task.completed}
+                onChange={handleTaskCompletionToggle}
+              />
+            </label>
+          </div>
+          <div className="text-end">
+            <Link
+              to={`/auth/edit-task/${task._id}`}
+              className="text-blue-500 mr-4"
+            >
+              Edit task
+            </Link>
+            <button onClick={handleDeleteClick} className="text-red-500">
+              Delete task
+            </button>
+          </div>
         </div>
       </div>
       <Link to="/auth/frontpage" className="text-blue-500">
