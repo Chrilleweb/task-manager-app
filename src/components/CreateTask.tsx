@@ -49,10 +49,11 @@ const CreateTask: React.FC<CreateTaskProps> = ({ isAuthenticated }) => {
 
   const handleCreateTask = async () => {
     try {
+      const subTasksArray = subTasks.map((subTask) => ({ name: subTask, completed: false }));
       const response = await apiService({
         url: apiEndpoints.createTask,
         method: 'POST',
-        body: { title, description, dueDate, subTasks, userName: getUserName, assignedTo, }, // Include dueDate in the request body
+        body: { title, description, dueDate, subTasks: subTasksArray, userName: getUserName, assignedTo, }, // Include dueDate in the request body
       });
 
       if (response) {

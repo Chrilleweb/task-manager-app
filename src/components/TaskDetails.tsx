@@ -4,12 +4,18 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import ErrorPageNotFound from "./errorPages/ErrorPageNotFound";
 
+interface SubTask {
+  _id: string;
+  name: string;
+  completed: boolean;
+}
+
 interface ViewTaskResponse {
   _id: string;
   title: string;
   description: string;
   dueDate: string;
-  subTasks: string[];
+  subTasks: SubTask[];
   assignedTo: string[];
   userName: string;
   completed: boolean;
@@ -94,6 +100,29 @@ const TaskDetails: React.FC = () => {
     }
   };
 
+  const handleSubtaskCompletionToggle = async (subTaskId: string) => {
+    try {
+      const updatedSubtasks = task.subTasks.map((subTask) => {
+        if (subTask._id === subTaskId) {
+          return { ...subTask, completed: !subTask.completed };
+        }
+        return subTask;
+      });
+
+      await apiService({
+        url: apiEndpoints.completeSubtask(id || "", subTaskId),
+        method: "PATCH",
+      });
+
+      // Update the task locally
+      setTask((prevTask) =>
+        prevTask ? { ...prevTask, subTasks: updatedSubtasks } : prevTask
+      );
+    } catch (error: any) {
+      console.error("Error updating subtask completion:", error);
+    }
+  };
+
   return (
     <div className="text-start mt-10 mb-24">
       <h1 className="text-4xl font-bold mb-4 text-center">Task Details</h1>
@@ -123,8 +152,20 @@ const TaskDetails: React.FC = () => {
           <strong>Subtasks:</strong>
           {task.subTasks && task.subTasks.length > 0 ? (
             <ul>
-              {task.subTasks.map((subTask, index) => (
-                <li key={index}>{subTask}</li>
+              {task.subTasks.map((subTask) => (
+                <li key={subTask._id}>
+                  <label className="flex items-center cursor-pointer">
+                    <input
+                      type="checkbox"
+                      className="form-checkbox h-5 w-5 text-blue-500"
+                      checked={subTask.completed}
+                      onChange={() =>
+                        handleSubtaskCompletionToggle(subTask._id)
+                      }
+                    />
+                    <span className="ml-2">{subTask.name}</span>
+                  </label>
+                </li>
               ))}
             </ul>
           ) : (
