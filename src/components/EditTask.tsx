@@ -256,16 +256,16 @@ const EditTask: React.FC<EditTaskProps> = ({ isAuthenticated }) => {
               onChange={(e) => setCompleted(e.target.checked)}
             />
           </div>
-          <div className="flex">
+          <div className="flex justify-between">
+          <Link to={`/auth/view-task/${id}`} className="text-blue-500 mr-4">
+            <button className="bg-red-300 text-gray-700 px-4 py-2 rounded hover:bg-red-400">Go Back</button>
+          </Link>
           <button
             className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400"
             onClick={handleEditTask}
           >
             Edit Task
           </button>
-          <Link to={`/auth/view-task/${id}`} className="text-blue-500 ml-4">
-            <button className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400">Go Back</button>
-          </Link>
           </div>
         </div>
       )}
