@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import apiEndpoints from "../services/apiEndpoints";
 import apiService from "../services/apiService";
 import { Link } from "react-router-dom";
+import { ViewTaskResponse } from "./types/types";
+import SubtaskCompletionBar from "./SubTaskCompletionBar";
 
 const ViewTasks: React.FC = () => {
   const [tasks, setTasks] = useState<any[]>([]);
@@ -50,7 +52,11 @@ const ViewTasks: React.FC = () => {
                     : "Not specified"}
                 </div>
                 <div className="text-gray-700 mb-2">
-                  <strong>Status:</strong>{" "}
+                  <strong>Subtasks completion:</strong>
+                  <SubtaskCompletionBar subtasks={task.subTasks} />
+                </div>
+                <div className="text-gray-700 mb-2">
+                  <strong>Task Status:</strong>{" "}
                   {task.completed ? "Completed" : "Not Completed"}
                 </div>
               </li>

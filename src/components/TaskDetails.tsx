@@ -4,23 +4,8 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import ErrorPageNotFound from "./errorPages/ErrorPageNotFound";
 import ErrorComponent from "./errorPages/ErrorComponent";
-
-interface SubTask {
-  _id: string;
-  name: string;
-  completed: boolean;
-}
-
-interface ViewTaskResponse {
-  _id: string;
-  title: string;
-  description: string;
-  dueDate: string;
-  subTasks: SubTask[];
-  assignedTo: string[];
-  userName: string;
-  completed: boolean;
-}
+import SubtaskCompletionBar from "./SubTaskCompletionBar";
+import { ViewTaskResponse } from "./types/types";
 
 interface TaskDetailsProps {
   isAuthenticated: boolean;
@@ -182,6 +167,7 @@ const TaskDetails: React.FC<TaskDetailsProps> = ({ isAuthenticated }) => {
             <span>None</span>
           )}
         </div>
+        <SubtaskCompletionBar subtasks={task.subTasks} />
         <div className="flex items-center justify-between mt-4">
           <div className="flex items-center">
             <strong className="mr-2">Completed:</strong>
