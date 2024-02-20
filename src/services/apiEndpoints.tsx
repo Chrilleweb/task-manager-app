@@ -11,6 +11,7 @@ const apiEndpoints = {
   deleteTask: (id: string) => `${API_BASE_URL}/auth/delete-task/${id}`,
   completeTask: (id: string) => `${API_BASE_URL}/auth/complete-task/${id}`,
   completeSubtask: (id: string, subtaskId: string) => `${API_BASE_URL}/auth/complete-subtask/${id}/${subtaskId}`,
+  searchUsers: `${API_BASE_URL}/auth/search-users`,
 };
 
 export default apiEndpoints;

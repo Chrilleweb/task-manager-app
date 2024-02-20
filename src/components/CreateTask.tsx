@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import apiEndpoints from '../services/apiEndpoints';
 import apiService from '../services/apiService';
 import ErrorComponent from './errorPages/ErrorComponent';
+import { Link } from 'react-router-dom';
 
 interface CreateTaskProps {
   isAuthenticated: boolean;
@@ -17,6 +18,7 @@ const CreateTask: React.FC<CreateTaskProps> = ({ isAuthenticated }) => {
   const [newAssignedUser, setNewAssignedUser] = useState<string>(''); 
   const [error, setError] = useState<boolean>(false); 
   const [success, setSuccess] = useState<string | null>(null);
+  const [userNotFoundError, setUserNotFoundError] = useState<string>('');
   const getUserName = localStorage.getItem('username') || '';
 
   useEffect(() => {
@@ -47,10 +49,6 @@ const CreateTask: React.FC<CreateTaskProps> = ({ isAuthenticated }) => {
     setSubTasks(updatedSubTasks);
   };
 
-  const handleAddAssignedUser = () => {
-    setAssignedTo((prevAssignedUsers) => [...prevAssignedUsers, newAssignedUser]);
-    setNewAssignedUser('');
-  };
 
   const handleRemoveAssignedUser = (index: number) => {
     const updatedAssignedTo = [...assignedTo];
@@ -83,6 +81,32 @@ const CreateTask: React.FC<CreateTaskProps> = ({ isAuthenticated }) => {
     }
   };
 
+  const handleAddAssignedUser = async () => {
+    try {
+      setUserNotFoundError(''); 
+      const response = await apiService({
+        url: apiEndpoints.searchUsers,
+        method: 'GET',
+      });
+  
+      if (!Array.isArray(response)) {
+        console.error('Unexpected response format:', response);
+        return;
+      }
+  
+      const userExists = response.includes(newAssignedUser);
+  
+      if (userExists) {
+        setAssignedTo((prevAssignedUsers) => [...prevAssignedUsers, newAssignedUser]);
+        setNewAssignedUser('');
+      } else {
+        setUserNotFoundError('User does not exist');
+      }
+    } catch (error: any) {
+      console.error('Error adding assigned user:', error);
+    }
+  };
+  
   return (
     <div>
     {error || !isAuthenticated ? (
@@ -163,10 +187,26 @@ const CreateTask: React.FC<CreateTaskProps> = ({ isAuthenticated }) => {
               ))}
             </ul>
           </div>
-          <div className="mb-4">
+            <div className="mb-4">
             <label htmlFor="assignedTo" className="block text-sm font-medium text-gray-600">
               Assigned To:
             </label>
+            {userNotFoundError && (
+              <p className="text-red-500 text-sm mt-1">{userNotFoundError}</p>
+            )}
+            <ul className="list-disc pl-6">
+              {assignedTo.map((user, index) => (
+                <li key={index}>
+                  {user}
+                  <button
+                    className="text-red-500 ml-2"
+                    onClick={() => handleRemoveAssignedUser(index)}
+                  >
+                    Remove User
+                  </button>
+                </li>
+              ))}
+            </ul>
             <div className="flex items-center">
               <input
                 type="text"
@@ -182,26 +222,16 @@ const CreateTask: React.FC<CreateTaskProps> = ({ isAuthenticated }) => {
                 Add
               </button>
             </div>
-            <ul className="list-disc pl-6">
-              {assignedTo.map((user, index) => (
-                <li key={index}>
-                  {user}
-                  <button
-                    className="text-red-500 ml-2"
-                    onClick={() => handleRemoveAssignedUser(index)}
-                  >
-                    Remove User
-                  </button>
-                </li>
-              ))}
-            </ul>
+            
           </div>
+          <Link to={"/auth/frontpage"}>
       <button
         className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400"
         onClick={handleCreateTask}
       >
         Create Task
       </button>
+      </Link>
     </div>
   )}
   </div>
