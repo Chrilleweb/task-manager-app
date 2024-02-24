@@ -36,7 +36,7 @@ const Frontpage: React.FC<FrontpageProps> = ({ isAuthenticated }) => {
   return (
     <div className="mb-24">
       <div className="text-center mt-10">
-        <h1 className="text-4xl font-bold mb-4">Welcome to the Frontpage</h1>
+        <h1 className="text-4xl font-bold mb-4">Welcome to Task Manager</h1>
         <p className="text-lg text-gray-600">This is the main page.</p>
       </div>
       <ViewTasks />
