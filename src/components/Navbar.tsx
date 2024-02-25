@@ -33,7 +33,7 @@ const Navbar: React.FC<NavbarProps> = ({
     : "";
 
     return (
-      <nav className="flex justify-between items-center py-4">
+      <nav className="flex justify-between items-center py-4 px-8">
         <div className="flex items-center">
           <Link
             to="/auth/frontpage"
