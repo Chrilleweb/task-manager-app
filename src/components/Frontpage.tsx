@@ -34,7 +34,7 @@ const Frontpage: React.FC<FrontpageProps> = ({ isAuthenticated }) => {
 
   return (
     <div className="mb-24">
-      <div className="mt-10 p-8 md:px-0">
+      <div className="pb-24 mt-10 p-8 md:px-0 border-b-2 border-slate-300">
         <h1 className="text-center text-4xl font-bold mb-4 text-slate-600">
           Welcome to Task Manager
         </h1>
