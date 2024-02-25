@@ -21,12 +21,11 @@ const Frontpage: React.FC<FrontpageProps> = ({ isAuthenticated }) => {
       }
     };
 
-    if(isAuthenticated){
+    if (isAuthenticated) {
       fetchData();
     } else {
       setError("Not authenticated");
     }
-
   }, []);
 
   if (error) {
@@ -35,9 +34,24 @@ const Frontpage: React.FC<FrontpageProps> = ({ isAuthenticated }) => {
 
   return (
     <div className="mb-24">
-      <div className="text-center mt-10">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Task Manager</h1>
-        <p className="text-lg text-gray-600">This is the main page.</p>
+      <div className="mt-10 p-8">
+        <h1 className="text-center text-4xl font-bold mb-4 text-slate-600">
+          Welcome to Task Manager
+        </h1>
+        <p className="text-lg text-gray-600">
+          Organize your tasks efficiently with Task Manager. Easily manage,
+          track, and complete your tasks. Stay on top of your to-do list,
+          prioritize effectively, and boost your productivity. Task Manager
+          simplifies task management, making it effortless to stay organized and
+          focused on your goals.
+        </p>
+        <p className="text-lg text-gray-600">Features:</p>
+        <ul className="text-left list-disc pl-6 text-gray-600">
+          <li>Create and manage tasks with ease.</li>
+          <li>Set due dates to stay organized and meet deadlines.</li>
+          <li>Track subtasks completion for a detailed overview.</li>
+          <li>Quickly identify completed tasks with the green highlight.</li>
+        </ul>
       </div>
       <ViewTasks />
     </div>
