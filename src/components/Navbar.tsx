@@ -32,50 +32,53 @@ const Navbar: React.FC<NavbarProps> = ({
     ? username.charAt(0).toUpperCase() + username.slice(1)
     : "";
 
-    return (
-      <nav className="flex justify-between items-center py-4 px-8">
-        <div className="flex items-center">
-          <Link
-            to="/auth/frontpage"
-            className="flex items-center text-2xl font-bold text-gray-800"
-          >
-            <img
-              src={logo}
-              alt="Task Manager Logo"
-              width="24"
-              height="24"
-              className="mr-2"
-            />
-            Task manager
-          </Link>
-          {isAuthenticated && (
-            <Link to="/auth/create-task" className="ml-4 mt-1 p-2 text-center">
-              Create Task
+  return (
+    <nav className="flex flex-col md:flex-row justify-between items-center py-4 xl:px-8 border-b-2 border-slate-300">
+      <div className="flex items-center">
+        <Link
+          to="/auth/frontpage"
+          className="flex items-center text-2xl font-bold text-gray-800"
+        >
+          <img
+            src={logo}
+            alt="Task Manager Logo"
+            width="50"
+            height="50"
+            className="mr-2"
+          />
+        </Link>
+      </div>
+      <div className="flex items-center">
+        {isAuthenticated && (
+          <>
+            <Link to="/auth/frontpage" className="p-2">
+              Home
             </Link>
-          )}
-        </div>
-        <div>
-          {isAuthenticated ? (
-            <div className="flex items-center">
-              <img src={userIcon} alt="User Icon" width="24" className="mr-2" />
+            <Link to="/auth/create-task" className="p-2">
+              Create
+            </Link>
+            <div className="flex items-center ml-4">
+              <img src={userIcon} alt="User Icon" width="14" className="mr-2" />
               <p className="mr-4">{usernameUpperCase}</p>
               <button className="p-2" onClick={handleLogout}>
                 Logout
               </button>
             </div>
-          ) : (
-            <>
-              <Link to="/login" className="p-2">
-                Login
-              </Link>
-              <Link to="/register" className="p-2">
-                Register
-              </Link>
-            </>
-          )}
-        </div>
-      </nav>
-    );
-  };
-  
-  export default Navbar;
+          </>
+        )}
+        {!isAuthenticated && (
+          <>
+            <Link to="/login" className="p-2">
+              Login
+            </Link>
+            <Link to="/register" className="p-2">
+              Register
+            </Link>
+          </>
+        )}
+      </div>
+    </nav>
+  );
+};
+
+export default Navbar;
