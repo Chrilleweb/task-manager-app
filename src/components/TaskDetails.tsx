@@ -194,7 +194,7 @@ const TaskDetails: React.FC<TaskDetailsProps> = ({ isAuthenticated }) => {
           </div>
         </div>
       </div>
-      <BackButton />
+      <BackButton to="/auth/view-tasks" />
     </div>
   );
 };
