@@ -6,6 +6,7 @@ import ErrorPageNotFound from "./errorPages/ErrorPageNotFound";
 import ErrorComponent from "./errorPages/ErrorComponent";
 import SubtaskCompletionBar from "./SubTaskCompletionBar";
 import { ViewTaskResponse } from "./types/types";
+import BackButton from "./BackButton";
 
 interface TaskDetailsProps {
   isAuthenticated: boolean;
@@ -193,11 +194,7 @@ const TaskDetails: React.FC<TaskDetailsProps> = ({ isAuthenticated }) => {
           </div>
         </div>
       </div>
-      <Link to="/auth/frontpage" className="text-blue-500">
-        <button className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400 mt-6">
-          Go back
-        </button>
-      </Link>
+      <BackButton />
     </div>
   );
 };
