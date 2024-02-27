@@ -2,10 +2,13 @@ import React, { useEffect, useState } from "react";
 import apiEndpoints from "../services/apiEndpoints";
 import apiService from "../services/apiService";
 import { Link } from "react-router-dom";
-import { ViewTaskResponse } from "./types/types";
 import SubtaskCompletionBar from "./SubTaskCompletionBar";
 
-const ViewTasks: React.FC = () => {
+interface ViewTasksProps {
+  isAuthenticated: boolean;
+}
+
+const ViewTasks: React.FC<ViewTasksProps> = ({ isAuthenticated }) => {
   const [tasks, setTasks] = useState<any[]>([]);
 
   useEffect(() => {
@@ -16,7 +19,7 @@ const ViewTasks: React.FC = () => {
           method: "GET",
         });
 
-        if (response && response.tasks && Array.isArray(response.tasks)) {
+        if (isAuthenticated && response && response.tasks && Array.isArray(response.tasks)) {
           setTasks(response.tasks);
         }
       } catch (error: any) {
@@ -28,7 +31,7 @@ const ViewTasks: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen p-8">
+    <div className="min-h-screen p-8 mb-24">
     <div className="max-w-4xl mx-auto">
         <h1 className="text-4xl font-bold text-center mb-8 text-slate-600">
           Projects

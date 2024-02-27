@@ -53,7 +53,7 @@ const Frontpage: React.FC<FrontpageProps> = ({ isAuthenticated }) => {
           <li>Quickly identify completed tasks with the green highlight.</li>
         </ul>
       </div>
-      <ViewTasks />
+      <ViewTasks isAuthenticated={isAuthenticated} />
     </div>
   );
 };

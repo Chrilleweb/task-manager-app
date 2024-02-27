@@ -54,6 +54,9 @@ const Navbar: React.FC<NavbarProps> = ({
             <Link to="/auth/frontpage" className="p-2">
               Home
             </Link>
+            <Link to="/auth/view-tasks" className="p-2">
+              View
+            </Link>
             <Link to="/auth/create-task" className="p-2">
               Create
             </Link>
