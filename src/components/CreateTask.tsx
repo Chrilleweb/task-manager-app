@@ -112,7 +112,7 @@ const CreateTask: React.FC<CreateTaskProps> = ({ isAuthenticated }) => {
     {error || !isAuthenticated ? (
       <ErrorComponent />
     ) : (
-    <div className="max-w-sm mx-auto mt-10 p-6 bg-white rounded shadow-md mb-24">
+    <div className="max-w-2xl mx-auto mt-10 p-6 bg-white rounded shadow-md mb-24">
       <h2 className="text-2xl font-semibold mb-4">Create Task</h2>
       {success && (
         <div className="mb-4 text-green-600">
