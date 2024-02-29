@@ -116,7 +116,7 @@ const TaskDetails: React.FC<TaskDetailsProps> = ({ isAuthenticated }) => {
   return (
     <div className="max-w-2xl mx-auto mt-10 mb-24">
       <h1 className="text-4xl font-bold mb-8 text-center">{task.title}</h1>
-      <div className="bg-amber-200 p-6 rounded-md shadow-md">
+      <div className={`bg-${task.completed ? 'green' : 'amber'}-200 p-6 rounded-md shadow-md`}>
         <div className="text-gray-700 mb-2">
           <strong>Created by:</strong> {task.userName}
         </div>
