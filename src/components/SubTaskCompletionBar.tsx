@@ -5,7 +5,9 @@ interface SubtaskCompletionBarProps {
   subtasks: SubTask[];
 }
 
-const SubtaskCompletionBar: React.FC<SubtaskCompletionBarProps> = ({ subtasks }) => {
+const SubtaskCompletionBar: React.FC<SubtaskCompletionBarProps> = ({
+  subtasks,
+}) => {
   // Calculate completion percentage
   const calculateCompletionPercentage = () => {
     if (!subtasks || subtasks.length === 0) {
@@ -20,7 +22,7 @@ const SubtaskCompletionBar: React.FC<SubtaskCompletionBarProps> = ({ subtasks })
 
   return (
     <div className="mt-2">
-     {/* <strong className="block mb-2">Subtask Completion:</strong> */}
+      {/* <strong className="block mb-2">Subtask Completion:</strong> */}
       <div className="relative pt-1">
         <div className="flex mb-2 items-center justify-between">
           <div>
@@ -43,4 +45,3 @@ const SubtaskCompletionBar: React.FC<SubtaskCompletionBarProps> = ({ subtasks })
 };
 
 export default SubtaskCompletionBar;
-

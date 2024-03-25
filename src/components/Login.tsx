@@ -8,7 +8,10 @@ interface LoginProps {
   setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Login: React.FC<LoginProps> = ({ isAuthenticated, setIsAuthenticated }) => {
+const Login: React.FC<LoginProps> = ({
+  isAuthenticated,
+  setIsAuthenticated,
+}) => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const [username, setUsername] = useState<string>("");
@@ -27,7 +30,7 @@ const Login: React.FC<LoginProps> = ({ isAuthenticated, setIsAuthenticated }) =>
       const response = await apiService({
         url: apiEndpoints.login,
         method: "POST",
-        body: { username, password }
+        body: { username, password },
       });
 
       // Check if response is successful

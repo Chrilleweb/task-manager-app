@@ -19,7 +19,12 @@ const ViewTasks: React.FC<ViewTasksProps> = ({ isAuthenticated }) => {
           method: "GET",
         });
 
-        if (isAuthenticated && response && response.tasks && Array.isArray(response.tasks)) {
+        if (
+          isAuthenticated &&
+          response &&
+          response.tasks &&
+          Array.isArray(response.tasks)
+        ) {
           setTasks(response.tasks);
         }
       } catch (error: any) {
@@ -32,20 +37,22 @@ const ViewTasks: React.FC<ViewTasksProps> = ({ isAuthenticated }) => {
 
   return (
     <div className="min-h-screen p-8 mb-24">
-    <div className="max-w-4xl mx-auto">
+      <div className="max-w-4xl mx-auto">
         <h1 className="text-4xl font-bold text-center mb-8 text-slate-600">
-          Projects
+          Tasks
         </h1>
         <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {tasks.map((task) => (
             <Link to={`/auth/view-task/${task._id}`} key={task._id}>
               <li
                 className={`p-4 rounded shadow-md ${
-                  task.completed ? 'bg-green-200' : 'bg-amber-200'
+                  task.completed ? "bg-green-200" : "bg-amber-200"
                 }`}
               >
                 <div className="mb-4">
-                  <strong className="text-xl text-slate-600">{task.title}</strong>
+                  <strong className="text-xl text-slate-600">
+                    {task.title}
+                  </strong>
                 </div>
                 <div className="text-gray-700 mb-2">
                   <strong>Description:</strong> {task.description}
@@ -70,7 +77,7 @@ const ViewTasks: React.FC<ViewTasksProps> = ({ isAuthenticated }) => {
         </ul>
       </div>
     </div>
-  );  
+  );
 };
 
 export default ViewTasks;

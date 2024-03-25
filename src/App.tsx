@@ -29,7 +29,7 @@ function App() {
       <div className="App container mx-auto">
         <Navbar isAuthenticated={isAuthenticated} setIsAuthentication={setIsAuthenticated} />
         <Routes>
-          <Route path="/" element={<Navigate to="/auth/frontpage" />} />
+        <Route path="/" element={isAuthenticated ? <Navigate to="/auth/frontpage" /> : <Navigate to="/login" />} />
           <Route path="/login" element={<Login isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />} />
           <Route path="/register" element={<Register />} />
           <Route path="/auth/frontpage" element={<Frontpage isAuthenticated={isAuthenticated} />} />

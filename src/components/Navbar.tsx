@@ -55,10 +55,10 @@ const Navbar: React.FC<NavbarProps> = ({
               Home
             </Link>
             <Link to="/auth/view-tasks" className="p-2">
-              View
+              Tasks
             </Link>
             <Link to="/auth/create-task" className="p-2">
-              Create
+              Create Task
             </Link>
             <div className="flex items-center ml-4">
               <img src={userIcon} alt="User Icon" width="14" className="mr-2" />

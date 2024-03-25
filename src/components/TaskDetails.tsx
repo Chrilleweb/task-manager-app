@@ -1,6 +1,6 @@
+import React, { useEffect, useState } from "react";
 import apiService from "../services/apiService";
 import apiEndpoints from "../services/apiEndpoints";
-import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import ErrorPageNotFound from "./errorPages/ErrorPageNotFound";
 import ErrorComponent from "./errorPages/ErrorComponent";
@@ -16,6 +16,7 @@ const TaskDetails: React.FC<TaskDetailsProps> = ({ isAuthenticated }) => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [task, setTask] = useState<ViewTaskResponse | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -33,8 +34,9 @@ const TaskDetails: React.FC<TaskDetailsProps> = ({ isAuthenticated }) => {
         }
       } catch (error: any) {
         console.error("Error fetching task:", error);
-        console.log(id);
         setError("Error fetching task");
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -44,6 +46,15 @@ const TaskDetails: React.FC<TaskDetailsProps> = ({ isAuthenticated }) => {
   if (!isAuthenticated) {
     return <ErrorComponent />;
   }
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-top h-screen">
+        <div className="text-3xl text-gray-600">Loading...</div>
+      </div>
+    );
+  }
+
   if (error || !task) {
     return <ErrorPageNotFound />;
   }
@@ -115,8 +126,14 @@ const TaskDetails: React.FC<TaskDetailsProps> = ({ isAuthenticated }) => {
 
   return (
     <div className="max-w-2xl mx-auto mt-10 mb-24">
-      <h1 className="text-4xl font-bold text-center mb-8 text-slate-600">{task.title}</h1>
-      <div className={`bg-${task.completed ? 'green' : 'amber'}-200 p-6 rounded-md shadow-md`}>
+      <h1 className="text-4xl font-bold text-center mb-8 text-slate-600">
+        {task.title}
+      </h1>
+      <div
+        className={`bg-${
+          task.completed ? "green" : "amber"
+        }-200 p-6 rounded-md shadow-md`}
+      >
         <div className="text-gray-700 mb-2">
           <strong>Created by:</strong> {task.userName}
         </div>
@@ -191,7 +208,6 @@ const TaskDetails: React.FC<TaskDetailsProps> = ({ isAuthenticated }) => {
       <BackButton to="/auth/view-tasks" />
     </div>
   );
-  
 };
 
 export default TaskDetails;

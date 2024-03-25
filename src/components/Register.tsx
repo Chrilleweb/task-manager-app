@@ -22,7 +22,7 @@ const Register: React.FC = () => {
       const response = await apiService({
         url: apiEndpoints.register,
         method: "POST",
-        body: { username, password }
+        body: { username, password },
       });
 
       if (response) {
@@ -110,6 +110,9 @@ const Register: React.FC = () => {
           autoComplete="new-password"
         />
       </div>
+      <Link to="/login" className="text-blue-500 mb-2 block">
+        Already have an account? Login here.
+      </Link>
       <button
         className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400"
         onClick={handleRegister}

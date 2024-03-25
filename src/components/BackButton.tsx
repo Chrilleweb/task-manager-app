@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 interface BackButtonProps {
-    to: string;
+  to: string;
 }
 
 const BackButton: React.FC<BackButtonProps> = ({ to }) => {

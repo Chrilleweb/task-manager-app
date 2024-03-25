@@ -27,7 +27,7 @@ const EditTask: React.FC<EditTaskProps> = ({ isAuthenticated }) => {
   const [completed, setCompleted] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const [success, setSuccess] = useState<string | null>(null);
-  const [userNotFoundError, setUserNotFoundError] = useState<string>('');
+  const [userNotFoundError, setUserNotFoundError] = useState<string>("");
   const getUserName = localStorage.getItem("username") || "";
 
   const formatDate = (date: string | undefined) => {
@@ -80,10 +80,12 @@ const EditTask: React.FC<EditTaskProps> = ({ isAuthenticated }) => {
   }, [isAuthenticated, id]);
 
   const handleAddSubTask = () => {
-    setSubTasks((prevSubTasks) => [...prevSubTasks, { name: newSubTask, completed: false }]);
+    setSubTasks((prevSubTasks) => [
+      ...prevSubTasks,
+      { name: newSubTask, completed: false },
+    ]);
     setNewSubTask("");
   };
-
 
   const handleRemoveSubTask = (index: number) => {
     const updatedSubTasks = [...subTasks];
@@ -124,27 +126,30 @@ const EditTask: React.FC<EditTaskProps> = ({ isAuthenticated }) => {
 
   const handleAddAssignedUser = async () => {
     try {
-      setUserNotFoundError(''); 
+      setUserNotFoundError("");
       const response = await apiService({
         url: apiEndpoints.searchUsers,
-        method: 'GET',
+        method: "GET",
       });
-  
+
       if (!Array.isArray(response)) {
-        console.error('Unexpected response format:', response);
+        console.error("Unexpected response format:", response);
         return;
       }
-  
+
       const userExists = response.includes(newAssignedUser);
-  
+
       if (userExists) {
-        setAssignedTo((prevAssignedUsers) => [...prevAssignedUsers, newAssignedUser]);
-        setNewAssignedUser('');
+        setAssignedTo((prevAssignedUsers) => [
+          ...prevAssignedUsers,
+          newAssignedUser,
+        ]);
+        setNewAssignedUser("");
       } else {
-        setUserNotFoundError('User does not exist');
+        setUserNotFoundError("User does not exist");
       }
     } catch (error: any) {
-      console.error('Error adding assigned user:', error);
+      console.error("Error adding assigned user:", error);
     }
   };
 
@@ -223,22 +228,24 @@ const EditTask: React.FC<EditTaskProps> = ({ isAuthenticated }) => {
               </button>
             </div>
             <ul className="list-disc pl-6">
-  {subTasks.map((subTask, index) => (
-    <li key={index}>
-      {subTask.name}
-      <button
-        className="text-red-500 ml-2"
-        onClick={() => handleRemoveSubTask(index)}
-      >
-        Remove Subtask
-      </button>
-    </li>
-  ))}
-</ul>
-
+              {subTasks.map((subTask, index) => (
+                <li key={index}>
+                  {subTask.name}
+                  <button
+                    className="text-red-500 ml-2"
+                    onClick={() => handleRemoveSubTask(index)}
+                  >
+                    Remove Subtask
+                  </button>
+                </li>
+              ))}
+            </ul>
           </div>
           <div className="mb-4">
-            <label htmlFor="assignedTo" className="block text-sm font-medium text-gray-600">
+            <label
+              htmlFor="assignedTo"
+              className="block text-sm font-medium text-gray-600"
+            >
               Assigned To:
             </label>
             {userNotFoundError && (
@@ -271,7 +278,7 @@ const EditTask: React.FC<EditTaskProps> = ({ isAuthenticated }) => {
               >
                 Add
               </button>
-            </div>      
+            </div>
           </div>
           <div className="mb-4">
             <strong>Completed:</strong> {completed}
@@ -284,15 +291,17 @@ const EditTask: React.FC<EditTaskProps> = ({ isAuthenticated }) => {
             />
           </div>
           <div className="flex justify-between">
-          <Link to={`/auth/view-task/${id}`} className="text-blue-500 mr-4">
-            <button className="bg-red-300 text-gray-700 px-4 py-2 rounded hover:bg-red-400">Go Back</button>
-          </Link>
-          <button
-            className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400"
-            onClick={handleEditTask}
-          >
-            Edit Task
-          </button>
+            <Link to={`/auth/view-task/${id}`} className="text-blue-500 mr-4">
+              <button className="bg-red-300 text-gray-700 px-4 py-2 rounded hover:bg-red-400">
+                Go Back
+              </button>
+            </Link>
+            <button
+              className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400"
+              onClick={handleEditTask}
+            >
+              Edit Task
+            </button>
           </div>
         </div>
       )}
