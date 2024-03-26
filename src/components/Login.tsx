@@ -27,10 +27,11 @@ const Login: React.FC<LoginProps> = ({
 
   const handleLogin = async () => {
     try {
+      const usernameLower = username.toLowerCase();
       const response = await apiService({
         url: apiEndpoints.login,
         method: "POST",
-        body: { username, password },
+        body: { username: usernameLower, password },
       });
 
       // Check if response is successful
